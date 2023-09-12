@@ -144,7 +144,7 @@ async def invoke_request(http_verb: HttpVerb,
                                            data=data,
                                            params=query,
                                            ssl=ssl_context,
-                                           trust_env=True
+                                           trust_env=True,
                                            auth=BasicAuth(*auth) if auth else None,
                                            headers=headers) as response:
                     return await HttpResponse.from_client_response(response)
