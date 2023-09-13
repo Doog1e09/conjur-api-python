@@ -135,7 +135,7 @@ async def invoke_request(http_verb: HttpVerb,
     This method preforms the actual request and catches possible SSLErrors to
     perform more user-friendly messages
     """
-    async with ClientSession() as session:
+    async with ClientSession(trust_env=True) as session:
         async with async_timeout.timeout(REQUEST_TIMEOUT_SECONDS):
             ssl_context = __create_ssl_context(ssl_verification_metadata)
             try:
@@ -144,7 +144,6 @@ async def invoke_request(http_verb: HttpVerb,
                                            data=data,
                                            params=query,
                                            ssl=ssl_context,
-                                           trust_env=True,
                                            auth=BasicAuth(*auth) if auth else None,
                                            headers=headers) as response:
                     return await HttpResponse.from_client_response(response)
